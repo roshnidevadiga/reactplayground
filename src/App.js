@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./App.css";
-import Button from "./components/button";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -27,15 +26,16 @@ class App extends Component {
     boolean: false,
     function: () => {}
   };
-  componentDidMount() {
+  setInitialProps = (component) => {
     let propsObj = {};
-    for (let prop in Button.propTypes) {
-      propsObj[prop] = Button.defaultProps[prop]
-        ? Button.defaultProps[prop]
-        : getPropsValue(Button, prop);
+    for (let prop in component.propTypes) {
+      propsObj[prop] = component.defaultProps[prop]
+        ? component.defaultProps[prop]
+        : getPropsValue(component, prop);
     }
     this.setState({
-      props: propsObj
+      props: propsObj,
+      currentComponent: component
     });
   }
   updateComponent = (e) => {
@@ -60,12 +60,10 @@ renderSelectedComponent = async e => {
 
   import(`../${path}`)
     .then(component =>
-      this.setState({
-        currentComponent: component.default
-      })
+      this.setInitialProps(component.default)
     )
     .catch(error => {
-      console.error(`"${path}.js" not yet supported`);
+      console.error(`"${path}" not yet supported`);
     });
 }
   render() {
@@ -90,7 +88,6 @@ renderSelectedComponent = async e => {
       </div>
       {Object.keys(props).length>0 && (
           <React.Fragment>
-            {/* <Button {...this.state.props}/> */}
             {
               componentsElements
             }
