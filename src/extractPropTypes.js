@@ -35,7 +35,7 @@ const getPropType = (propTypes, propName) => {
     }
 };
 
-const getPropIsRequired = (propTypes, propName) => {
+export const getPropIsRequired = (propTypes, propName) => {
     let fakeProps = {};
     fakeProps[propName] = null;
     let propObj = {
