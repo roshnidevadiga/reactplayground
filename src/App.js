@@ -162,13 +162,14 @@ class App extends Component {
                                     <div className="col-md-6 border py-3">
                                         <h3>Props</h3>
                                         {Object.keys(props).map((item, index) => (
-                                            <div key={item} className="row">
+                                            <div key={item} className="row mb-2">
                                                 <label className="col-6 text-right">{item}</label>
                                                 <div className="col-6 text-left">
                                                     {
                                                         typeof props[item] === 'string' && <input
                                                             type="text"
                                                             name={item}
+                                                            className = 'w-100'
                                                             key={this.state.currentComponent.toString() + index}
                                                             defaultValue={this.state.props[item]}
                                                             ref={item}
@@ -177,7 +178,7 @@ class App extends Component {
                                                     {
                                                         typeof props[item] === 'function' && (
                                                             <React.Fragment>
-                                                                <textarea key={this.state.currentComponent.toString() + index} readOnly name={item} defaultValue={this.state.props[item].toString()} ref={item} />
+                                                                <textarea className = 'w-100' key={this.state.currentComponent.toString() + index} readOnly name={item} defaultValue={this.state.props[item].toString()} ref={item} />
                                                             </React.Fragment>
                                                         )
                                                     }
@@ -191,7 +192,7 @@ class App extends Component {
                                                     {
                                                         typeof props[item] === 'object' && (
                                                             <React.Fragment>
-                                                                <textarea key={this.state.currentComponent.toString() + index} name={item} defaultValue={JSON.stringify(this.state.props[item])} ref={item} />
+                                                                <textarea className = 'w-100' key={this.state.currentComponent.toString() + index} name={item} defaultValue={JSON.stringify(this.state.props[item])} ref={item} />
                                                             </React.Fragment>
                                                         )
                                                     }
@@ -207,6 +208,7 @@ class App extends Component {
                                                 <div className="col-6 text-left">
                                                     {
                                                         typeof states[item] === 'string' && <input
+                                                            className = 'w-100'
                                                             type="text"
                                                             name={item}
                                                             key={this.state.currentComponent.toString() + index}
@@ -224,7 +226,7 @@ class App extends Component {
                                                     {
                                                         typeof states[item] === 'object' && (
                                                             <React.Fragment>
-                                                                <textarea key={this.state.currentComponent.toString() + index} name={item} defaultValue={JSON.stringify(states[item])} ref={item} />
+                                                                <textarea className = 'w-100' key={this.state.currentComponent.toString() + index} name={item} defaultValue={JSON.stringify(states[item])} ref={item} />
                                                             </React.Fragment>
                                                         )
                                                     }
