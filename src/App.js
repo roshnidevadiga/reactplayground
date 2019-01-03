@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import "./App.css";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import checkPropTypes from 'check-prop-types';
 import PropTypes from 'prop-types';
-import componentsPath from './filePaths';
-import getPropsValue, { getPropIsRequired } from './extractPropTypes';
+import {componentPaths, cssPaths} from './filePaths';
+import getPropsValue , {getPropIsRequired} from './extractPropTypes';
 
 class App extends Component {
     state = {
@@ -14,6 +12,12 @@ class App extends Component {
         currentComponent: null,
         states: null
     };
+    constructor(){
+        super();
+        cssPaths.map(path => {
+            import(`../${path}`);
+        })
+    }
     defaultValueMappingsRequired = {
         string: 'test',
         boolean: false,
@@ -138,7 +142,7 @@ class App extends Component {
                         <div className="p-3 sidebar-title">Component List</div>
                         <ul className="list-unstyled components sidebar-list">
                             {
-                                componentsPath.map(path => (
+                                componentPaths.map(path => (
                                     <li key={path} className="nav-item">
                                         <a href="#" name={path} onClick={this.renderSelectedComponent} className="nav-link">
                                             {this.getComponentName(path)}
