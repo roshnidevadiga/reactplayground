@@ -235,7 +235,7 @@ class App extends Component {
                                         ))}
                                     </div>
                                 </div>
-                                <button onClick={this.onApply}>Apply</button>
+                                <button className='btn btn-secondary' onClick={this.onApply}>Apply</button>
                             </div>
                         </React.Fragment>
                     )}
