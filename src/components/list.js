@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import '../css/list.css';
 
 const List = (props) => {
 
     return (
-        <div className={props.customClass}>
+        <div className={`container custom-list ${props.customClass}`}>
             {
                 props.listItems.map(item=>(
                     <div key={item.name} className='row'>
@@ -31,6 +32,10 @@ List.defaultProps = {
         {
             name: 'cd name',
             value: 'cd value'
+        },
+        {
+            name: 'ef name',
+            value: 'ef value'
         }
     ]
 }

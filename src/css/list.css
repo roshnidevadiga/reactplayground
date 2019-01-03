@@ -1,0 +1,16 @@
+.custom-list {
+    border: 1px solid #c7c4c4;
+ }
+ 
+ .custom-list .row {
+    border-bottom: 1px solid #c7c4c4;
+ }
+
+.custom-list .row:last-child {
+    border: none;
+}
+
+.striped-list .row:nth-child(odd) {
+    background-color: lightgray;
+}
+
