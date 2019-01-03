@@ -6,17 +6,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import checkPropTypes from 'check-prop-types';
 import PropTypes from 'prop-types';
 import componentsPath from './filePaths';
-import getPropsValue from './extractPropTypes.js';
+import getPropsValue , {getPropIsRequired} from './extractPropTypes';
 
 class App extends Component {
   state = {
     props: {},
     currentComponent: null
   };
-
-  // constructor(){
-  //   this.refs = React.createRef();
-  // }
 
   defaultValueMappingsRequired = {
     string: 'test',
@@ -70,6 +66,7 @@ renderSelectedComponent = async e => {
 
 onApply =()=>{
   let object ={};
+  let requiredPresentFlag =true;
   for(var item in this.state.props){
     if(typeof this.state.props[item]==='boolean'){
       object[item] = this.refs[item].checked;
@@ -77,8 +74,14 @@ onApply =()=>{
     else if(typeof this.state.props[item] !== 'function'){
       object[item] = this.refs[item].value;
     }
+    let isRequired = getPropIsRequired(this.state.currentComponent.propTypes, item);
+    if(isRequired && object[item]===""){
+      requiredPresentFlag =false;
+      alert(`${item} is required.`)
+      break;
+    }
   }
-  this.setState({
+  requiredPresentFlag && this.setState({
     props:{
       ...this.state.props,
       ...object
@@ -126,7 +129,7 @@ render() {
                   {
                       typeof props[item]==='function' && (
                           <React.Fragment>
-                          <textarea readonly name={item} defaultValue={this.state.props[item].toString()} ref={item}/>
+                          <textarea readOnly name={item} defaultValue={this.state.props[item].toString()} ref={item}/>
                           </React.Fragment>
                       )
                   }
