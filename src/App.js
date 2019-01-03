@@ -9,49 +9,48 @@ import componentsPath from './filePaths';
 import getPropsValue , {getPropIsRequired} from './extractPropTypes';
 
 class App extends Component {
-  state = {
-    props: {},
-    currentComponent: null
-  };
-
-  defaultValueMappingsRequired = {
-    string: 'test',
-    boolean: false,
-    function: () => alert('Clicked')
-  };
-  defaultValueMappings = {
-    string: '',
-    boolean: false,
-    function: () => {}
-  };
-  setInitialProps = (component) => {
-    let propsObj = {};
-    for (let prop in component.propTypes) {
-      propsObj[prop] = component.defaultProps[prop]
-        ? component.defaultProps[prop]
-        : getPropsValue(component, prop);
+    state = {
+        props: {},
+        currentComponent: null
+    };
+    defaultValueMappingsRequired = {
+        string: 'test',
+        boolean: false,
+        function: () => alert('Clicked')
+    };
+    defaultValueMappings = {
+        string: '',
+        boolean: false,
+        function: () => { }
+    };
+    setInitialProps = (component) => {
+        let propsObj = {};
+        for (let prop in component.propTypes) {
+            propsObj[prop] = component.defaultProps[prop]
+                ? component.defaultProps[prop]
+                : getPropsValue(component, prop);
+        }
+        this.setState({
+            props: propsObj,
+            currentComponent: component
+        });
     }
-    this.setState({
-      props: propsObj,
-      currentComponent: component
-    });
-  }
-  updateComponent = (e) => {
-    let value = e.target.value;
-    if(e.target.value=='true' || e.target.value=='false') {
-      if(e.target.value=='true') {
-        value = true;
-      } else {
-        value = false;
-      }
+    updateComponent = (e) => {
+        let value = e.target.value;
+        if (e.target.value == 'true' || e.target.value == 'false') {
+            if (e.target.value == 'true') {
+                value = true;
+            } else {
+                value = false;
+            }
+        }
+        this.setState({
+            props: {
+                ...this.state.props,
+                [e.target.name]: value
+            }
+        });
     }
-    this.setState({
-      props: {
-        ...this.state.props,
-        [e.target.name]: value
-      }
-    });
-  }
 renderSelectedComponent = async e => {
   const path = e.target.name;
   console.log(`Loading ${path} component...`);
