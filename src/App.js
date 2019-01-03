@@ -30,9 +30,10 @@ class App extends Component {
     };
     setInitialProps = (component) => {
         let propsObj = {};
+        let componentDefaultProps = component.defaultProps || {};
         for (let prop in component.propTypes) {
-            propsObj[prop] = component.defaultProps[prop]
-                ? component.defaultProps[prop]
+            propsObj[prop] = componentDefaultProps[prop]
+                ? componentDefaultProps[prop]
                 : getPropsValue(component, prop);
         }
         this.setState({
