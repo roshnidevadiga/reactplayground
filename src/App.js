@@ -35,22 +35,6 @@ class App extends Component {
             currentComponent: component
         });
     }
-    updateComponent = (e) => {
-        let value = e.target.value;
-        if (e.target.value == 'true' || e.target.value == 'false') {
-            if (e.target.value == 'true') {
-                value = true;
-            } else {
-                value = false;
-            }
-        }
-        this.setState({
-            props: {
-                ...this.state.props,
-                [e.target.name]: value
-            }
-        });
-    }
   renderSelectedComponent = async e => {
     const path = e.target.name;
     console.log(`Loading ${path} component...`);
@@ -74,8 +58,10 @@ class App extends Component {
       if(typeof this.state.props[item]==='boolean'){
         object[item] = this.refs[item].checked;
       }
-      else if(typeof this.state.props[item] !== 'function'){
+      else if(typeof this.state.props[item] === 'string'){
         object[item] = this.refs[item].value;
+      } else if(typeof this.state.props[item] === 'object') {
+        object[item] = JSON.parse(this.refs[item].value);
       }
       let isRequired = getPropIsRequired(this.state.currentComponent.propTypes, item);
       if(isRequired && object[item]===""){
@@ -131,13 +117,14 @@ class App extends Component {
                         <div className="row">
                             <div className="col">
                                 <h3>Props</h3>
-                                {Object.keys(props).map(item => (
+                                {Object.keys(props).map((item, index) => (
                                     <div key={item}>
                                         <label>{item}</label>
                                         {
                                             typeof props[item]==='string' && <input
                                             type="text"
                                             name={item}
+                                            key={this.state.currentComponent.toString()+index}
                                             defaultValue={this.state.props[item]}
                                             ref={item}
                                             />
@@ -145,16 +132,23 @@ class App extends Component {
                                         {
                                             typeof props[item]==='function' && (
                                               <React.Fragment>
-                                              <textarea readOnly name={item} defaultValue={this.state.props[item].toString()} ref={item}/>
+                                              <textarea key={this.state.currentComponent.toString()+index} readOnly name={item} defaultValue={this.state.props[item].toString()} ref={item}/>
                                               </React.Fragment>
                                           )
                                         }
                                         {
                                             typeof props[item]==='boolean' && (
                                               <React.Fragment>
-                                              <input type='checkbox' defaultChecked={this.state.props[item]===false? false: true} onChange={()=> console.log("true")} ref={item}/>
+                                              <input key={this.state.currentComponent.toString()+index} type='checkbox' defaultChecked={this.state.props[item]===false? false: true} onChange={()=> console.log("true")} ref={item}/>
                                               </React.Fragment>
                                           )
+                                        }
+                                        {
+                                            typeof props[item]==='object' && (
+                                                <React.Fragment>
+                                                <textarea key={this.state.currentComponent.toString()+index} name={item} defaultValue={JSON.stringify(this.state.props[item])} ref={item}/>
+                                                </React.Fragment>
+                                            )
                                         }
                                     </div>
                                 ))}
