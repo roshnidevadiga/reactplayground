@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 class Button extends Component {
     state = {
-        active: false,
         hovered: false
     }
     onClick = (e) => {
@@ -31,7 +30,8 @@ Button.defaultProps = {
     type: 'primary  ',
     size: 'sm',
     disabled: false,
-    customClasses: ''
+    customClasses: '',
+    title: 'Button'
 };
 Button.propTypes = {
     type: PropTypes.string,
