@@ -18,7 +18,7 @@ if(directory){
   console.log('Please provide a directory');
 }
 directories.unshift("const paths=[");
-directories.push("]");
+directories.push("]\n export default paths;");
 
 writeFile(config.outputPath, directories.join("\n"), function(err) {
   if(err) {

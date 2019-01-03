@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import "./App.css";
 import Button from "./components/button";
-// import Fields from "./fields";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import checkPropTypes from 'check-prop-types';
 import PropTypes from 'prop-types';
-import componentsPath from './componentsList';
+import componentsPath from './filePaths';
 import getPropsValue from './extractPropTypes.js';
 
 
@@ -58,7 +58,7 @@ renderSelectedComponent = async e => {
   const path = e.target.name;
   console.log(`Loading ${path} component...`);
 
-  import(`${path}.js`)
+  import(`../${path}`)
     .then(component =>
       this.setState({
         currentComponent: component.default
