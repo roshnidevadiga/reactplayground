@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Button from "./components/button";
 import Fields from "./fields";
@@ -25,44 +24,51 @@ class App extends Component {
   defaultValueMappingsRequired = {
     string: 'test',
     boolean: false,
-    onClick: () => alert('Clicked')
+    function: () => alert('Clicked')
   };
   defaultValueMappings = {
     string: '',
     boolean: false,
-    onClick: () => {}
+    function: () => {}
   };
   componentDidMount() {
-    // var componentClass = require('./components/button');
-    // console.log(Button.propTypes);
-    // console.log(Button.defaultProps);
-
-    // console.log(extractPropTypes);
-    // console.log(PropTypes);
-    let typesObj = this.extractTypes(Button);
-    console.log(typesObj);
     let propsObj = {};
     for (let prop in Button.propTypes) {
       propsObj[prop] = Button.defaultProps[prop]
         ? Button.defaultProps[prop]
-        : typesObj[prop].required ? this.defaultValueMappingsRequired[typesObj[prop].type]: this.defaultValueMappings[typesObj[prop].type];
-      // propsArray.push({
-      //   label: prop,
-      //   value: (Button.defaultProps[prop]) ? Button.defaultProps[prop]: ''
-      // });
+        : this.getPropsValue(prop);
     }
     this.setState({
       props: propsObj
     });
-
-    
-    // console.log(typesObj);
   }
-  updateComponent = (e, item, value) => {
+  getPropsValue = (prop) => {
+    let typesObj = this.extractTypes(Button);
+    let propValue;
+    if(typesObj[prop].required) {
+      propValue = this.defaultValueMappingsRequired[typesObj[prop].type];
+    } else {
+      propValue = this.defaultValueMappings[typesObj[prop].type];
+    }
+    return propValue
+  }
+  updateComponent = (e) => {
+    let value = e.target.value;
+    if(e.target.value=='true' || e.target.value=='false') {
+      if(e.target.value=='true') {
+        value = true;
+      } else {
+        value = false;
+      }
+    }
+
+    // if(e.target.value.includes('_function()')) {
+    //   value = eval(value);
+    // }
     this.setState({
       props: {
         ...this.state.props,
-        [e.target.name]: e.target.value
+        [e.target.name]: value
       }
     });
   };
@@ -72,8 +78,6 @@ class App extends Component {
     let propObj = {
       [propName]: propTypes[propName]
     }
-
-    // let error = checkPropTypes(propTypes, fakeProps, 'prop', Button[propName]);
     let error = checkPropTypes(propObj, fakeProps, 'prop');
     console.log(error);
     // extract type from error string
@@ -114,43 +118,52 @@ extractTypes(component) {
     return type_map;
 }
   render() {
+    console.log(this.state.props);
+    let {props} = this.state;
     return (
       <div className="App">
-        <Button {...this.state.props}/>
-        {this.state.props && (
+      {Object.keys(props).length>0 && (
           <React.Fragment>
-            {Object.keys(this.state.props).map(item => (
+            <Button {...this.state.props}/>
+
+            {Object.keys(props).map(item => (
               <div key={item}>
                 <label>{item}</label>
-                <input
+                {
+                  typeof props[item]==='string' && <input
                   type="text"
                   name={item}
                   value={this.state.props[item]}
                   onChange={this.updateComponent}
                 />
+                }
+                {
+                  typeof props[item]==='function' && (
+                    <React.Fragment>
+                      <textarea name={item} onChange={this.updateComponent} value={this.state.props[item].toString()}/>
+                    </React.Fragment>
+                  )
+                }
+                {
+                  typeof props[item]==='boolean' && (
+                    <React.Fragment>
+                        <input type='radio' value={true} name={item} checked={this.state.props[item]===true? true: false} onChange={this.updateComponent}/> true
+                        <input type='radio' value={false} name={item} checked={this.state.props[item]===false? true: false} onChange={this.updateComponent}/> false
+                    </React.Fragment>
+                  )
+                }
+                {/* <input
+                  type="text"
+                  name={item}
+                  value={this.state.props[item]}
+                  onChange={this.updateComponent}
+                /> */}
                 {/* <input type='text' value={this.state.props[item]} onChange={(e)=>this.updateComponent(item, this.state.props[item], e)}/> */}
               </div>
             ))}
           </React.Fragment>
         )}
-        {/* <Fields fields={this.state.props}/> */}
       </div>
-      // <div className="App">
-      //   <header className="App-header">
-      //     <img src={logo} className="App-logo" alt="logo" />
-      //     <p>
-      //       Edit <code>src/App.js</code> and save to reload.
-      //     </p>
-      //     <a
-      //       className="App-link"
-      //       href="https://reactjs.org"
-      //       target="_blank"
-      //       rel="noopener noreferrer"
-      //     >
-      //       Learn React
-      //     </a>
-      //   </header>
-      // </div>
     );
   }
 }
