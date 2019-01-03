@@ -1,6 +1,8 @@
-const paths=[
-	'src/components/button.js',
+export const componentPaths=[
+	'src/components/button/button.js',
 	'src/components/card.js',
 	'src/components/list.js',
-]
- export default paths;
+];
+export const cssPaths=[
+	'src/App.css',
+];

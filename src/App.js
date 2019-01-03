@@ -240,7 +240,7 @@ class App extends Component {
                                     </div>
                                 </div>
                                 <button className='btn btn-secondary' onClick={this.onApply}>Apply</button>
-                                <div className='text-secondary mt-3' style={{fontSize: '12px'}}>Note: * indicates a required prop</div>
+                                <div className='text-secondary mt-3 note-text'>Note: * indicates a required prop</div>
                             </div>
                         </React.Fragment>
                     )}
