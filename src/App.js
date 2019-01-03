@@ -163,7 +163,7 @@ class App extends Component {
                                         <h3>Props</h3>
                                         {Object.keys(props).map((item, index) => (
                                             <div key={item} className="row mb-2">
-                                                <label className="col-6 text-right">{item}</label>
+                                                <label className="col-6 text-right">{item}{ getPropIsRequired(this.state.currentComponent.propTypes, item) ? '*': ''}</label>
                                                 <div className="col-6 text-left">
                                                     {
                                                         typeof props[item] === 'string' && <input
@@ -236,6 +236,7 @@ class App extends Component {
                                     </div>
                                 </div>
                                 <button className='btn btn-secondary' onClick={this.onApply}>Apply</button>
+                                <div className='text-secondary mt-3' style={{fontSize: '12px'}}>Note: * indicates a required prop</div>
                             </div>
                         </React.Fragment>
                     )}
