@@ -4,7 +4,7 @@ import '../../css/button.css';
 
 class Button extends Component {
     state = {
-        hovered: false
+        isSuccess: false
     }
     onClick = (e) => {
         if (this.props.disabled) {
@@ -18,9 +18,9 @@ class Button extends Component {
     }
     render() {
         const { type, size, disabled, title, customClasses} = this.props;
-        const { active, hovered } = this.state;
+        const { isSuccess } = this.state;
         return (
-            <input type="button" className={`btn btn-${type} btn-${size} ${disabled ? 'disabled': ''} ${hovered ? 'hover': ''} ${customClasses}`} 
+            <input type="button" className={`btn btn-${type} btn-${size} ${disabled ? 'disabled': ''} ${isSuccess ? 'success-button': ''} ${customClasses}`} 
             onClick={this.onClick} value={title} />
         );
     }
