@@ -133,10 +133,10 @@ class App extends Component {
         }
         return (
             <div className="App d-flex">
-                <div id="rp-sidebar">
-                    <nav id="rp-sidebar" className="bg-light">
-                        <div className="p-3">Component List</div>
-                        <ul className="list-unstyled components">
+                <div id="rp-sidebar" className="bg-light border-right">
+                    <nav>
+                        <div className="p-3 sidebar-title">Component List</div>
+                        <ul className="list-unstyled components sidebar-list">
                             {
                                 componentsPath.map(path => (
                                     <li key={path} className="nav-item">
@@ -149,89 +149,92 @@ class App extends Component {
                         </ul>
                     </nav>
                 </div>
-                <div id="rp-content" className="text-center container-fluid">
-                    <div className="container-fluid mb-4 text-center">
-                        <h3>Component</h3>
-                        <div>
-                            {
-                                componentElement
-                            }
+                <div id="rp-content" className="text-center container-fluid py-3">
+                    {
+                        componentElement && <div className="container-fluid mb-4 text-center">
+                            <div className="bd-example rounded">{componentElement}</div>
                         </div>
-                    </div>
+                    }
                     {Object.keys(props).length > 0 && (
                         <React.Fragment>
-                            <div className="row">
-                                <div className="col">
-                                    <h3>Props</h3>
-                                    {Object.keys(props).map((item, index) => (
-                                        <div key={item}>
-                                            <label>{item}</label>
-                                            {
-                                                typeof props[item] === 'string' && <input
-                                                    type="text"
-                                                    name={item}
-                                                    key={this.state.currentComponent.toString() + index}
-                                                    defaultValue={this.state.props[item]}
-                                                    ref={item}
-                                                />
-                                            }
-                                            {
-                                                typeof props[item] === 'function' && (
-                                                    <React.Fragment>
-                                                        <textarea key={this.state.currentComponent.toString() + index} readOnly name={item} defaultValue={this.state.props[item].toString()} ref={item} />
-                                                    </React.Fragment>
-                                                )
-                                            }
-                                            {
-                                                typeof props[item] === 'boolean' && (
-                                                    <React.Fragment>
-                                                        <input key={this.state.currentComponent.toString() + index} type='checkbox' defaultChecked={this.state.props[item] === false ? false : true} ref={item} />
-                                                    </React.Fragment>
-                                                )
-                                            }
-                                            {
-                                                typeof props[item] === 'object' && (
-                                                    <React.Fragment>
-                                                        <textarea key={this.state.currentComponent.toString() + index} name={item} defaultValue={JSON.stringify(this.state.props[item])} ref={item} />
-                                                    </React.Fragment>
-                                                )
-                                            }
-                                        </div>
-                                    ))}
+                            <div className="container-fluid">
+                                <div className="row mb-3">
+                                    <div className="col-md-6 border py-3">
+                                        <h3>Props</h3>
+                                        {Object.keys(props).map((item, index) => (
+                                            <div key={item} className="row">
+                                                <label className="col-6 text-right">{item}</label>
+                                                <div className="col-6 text-left">
+                                                    {
+                                                        typeof props[item] === 'string' && <input
+                                                            type="text"
+                                                            name={item}
+                                                            key={this.state.currentComponent.toString() + index}
+                                                            defaultValue={this.state.props[item]}
+                                                            ref={item}
+                                                        />
+                                                    }
+                                                    {
+                                                        typeof props[item] === 'function' && (
+                                                            <React.Fragment>
+                                                                <textarea key={this.state.currentComponent.toString() + index} readOnly name={item} defaultValue={this.state.props[item].toString()} ref={item} />
+                                                            </React.Fragment>
+                                                        )
+                                                    }
+                                                    {
+                                                        typeof props[item] === 'boolean' && (
+                                                            <React.Fragment>
+                                                                <input key={this.state.currentComponent.toString() + index} type='checkbox' defaultChecked={this.state.props[item] === false ? false : true} ref={item} />
+                                                            </React.Fragment>
+                                                        )
+                                                    }
+                                                    {
+                                                        typeof props[item] === 'object' && (
+                                                            <React.Fragment>
+                                                                <textarea key={this.state.currentComponent.toString() + index} name={item} defaultValue={JSON.stringify(this.state.props[item])} ref={item} />
+                                                            </React.Fragment>
+                                                        )
+                                                    }
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="col-md-6 border py-3">
+                                        <h3>State</h3>
+                                        {states && Object.keys(states).map((item, index) => (
+                                            <div key={item} className="row">
+                                                <label className="col-6 text-right">{item}</label>
+                                                <div className="col-6 text-left">
+                                                    {
+                                                        typeof states[item] === 'string' && <input
+                                                            type="text"
+                                                            name={item}
+                                                            key={this.state.currentComponent.toString() + index}
+                                                            defaultValue={states[item]}
+                                                            ref={item}
+                                                        />
+                                                    }
+                                                    {
+                                                        typeof states[item] === 'boolean' && (
+                                                            <React.Fragment>
+                                                                <input key={this.state.currentComponent.toString() + index} type='checkbox' defaultChecked={states[item] === false ? false : true} ref={item} />
+                                                            </React.Fragment>
+                                                        )
+                                                    }
+                                                    {
+                                                        typeof states[item] === 'object' && (
+                                                            <React.Fragment>
+                                                                <textarea key={this.state.currentComponent.toString() + index} name={item} defaultValue={JSON.stringify(states[item])} ref={item} />
+                                                            </React.Fragment>
+                                                        )
+                                                    }
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
-                                <div className="col">
-                                    <h3>State</h3>
-                                    {states && Object.keys(states).map((item, index) => (
-                                        <div key={item}>
-                                            <label>{item}</label>
-                                            {
-                                                typeof states[item] === 'string' && <input
-                                                    type="text"
-                                                    name={item}
-                                                    key={this.state.currentComponent.toString() + index}
-                                                    defaultValue={states[item]}
-                                                    ref={item}
-                                                />
-                                            }
-                                            {
-                                                typeof states[item] === 'boolean' && (
-                                                    <React.Fragment>
-                                                        <input key={this.state.currentComponent.toString() + index} type='checkbox' defaultChecked={states[item] === false ? false : true} ref={item} />
-                                                    </React.Fragment>
-                                                )
-                                            }
-                                            {
-                                                typeof states[item] === 'object' && (
-                                                    <React.Fragment>
-                                                        <textarea key={this.state.currentComponent.toString() + index} name={item} defaultValue={JSON.stringify(states[item])} ref={item} />
-                                                    </React.Fragment>
-                                                )
-                                            }
-                                        </div>
-                                    ))}
-                                </div>
+                                <button onClick={this.onApply}>Apply</button>
                             </div>
-                            <button onClick={this.onApply}>Apply</button>
                         </React.Fragment>
                     )}
                 </div>
