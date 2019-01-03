@@ -152,7 +152,7 @@ class App extends Component {
                                         {
                                             typeof props[item]==='boolean' && (
                                               <React.Fragment>
-                                              <input type='checkbox' defaultChecked={this.state.props[item]===false? true: false} onChange={()=> console.log("true")} ref={item}/>
+                                              <input type='checkbox' defaultChecked={this.state.props[item]===false? false: true} onChange={()=> console.log("true")} ref={item}/>
                                               </React.Fragment>
                                           )
                                         }
