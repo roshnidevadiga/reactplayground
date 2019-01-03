@@ -79,8 +79,8 @@ renderSelectedComponent = async e => {
       {
           componentsPath.map(path=>(
             <div key={path}>
-            <a name={path} onClick={this.renderSelectedComponent}> 
-              {path}
+            <a style={{cursor: 'pointer'}} name={path} onClick={this.renderSelectedComponent}> 
+              {path.substring(path.lastIndexOf('/')+1).split('.')[0]}
             </a>
             </div>
           ))

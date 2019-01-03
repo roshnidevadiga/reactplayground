@@ -26,7 +26,7 @@ class Button extends Component {
 }
 
 Button.defaultProps = {
-    type: 'default',
+    type: 'primary  ',
     size: 'sm',
     disabled: false,
     customClasses: ''
