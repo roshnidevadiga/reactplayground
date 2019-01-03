@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 class Button extends Component {
     state = {
-        test: true
+        active: false,
+        hovered: false
     }
     onClick = (e) => {
         if (this.props.disabled) {
@@ -17,8 +18,9 @@ class Button extends Component {
     }
     render() {
         const { type, size, disabled, title, customClasses} = this.props;
+        const { active, hovered } = this.state;
         return (
-            <input type="button" className={`btn btn-${type} btn-${size} ${disabled ? 'disabled': ''} ${customClasses}`} 
+            <input type="button" className={`btn btn-${type} btn-${size} ${disabled ? 'disabled': ''} ${hovered ? 'hover': ''} ${customClasses}`} 
             onClick={this.onClick} value={title} />
         );
     }

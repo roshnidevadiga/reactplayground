@@ -4,13 +4,15 @@ import checkPropTypes from 'check-prop-types';
 const defaultValueMappingsRequired = {
     string: 'test',
     boolean: false,
-    function: () => alert('Clicked')
+    function: () => alert('Clicked'),
+    array: []
 };
 
 const defaultValueMappings = {
     string: '',
     boolean: false,
-    function: () => {}
+    function: () => {},
+    array: []
 };
 
 const getPropType = (propTypes, propName) => {
