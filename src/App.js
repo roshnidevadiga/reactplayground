@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import "./App.css";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import checkPropTypes from 'check-prop-types';
 import PropTypes from 'prop-types';
-import componentsPath from './filePaths';
+import {componentPaths, cssPaths} from './filePaths';
 import getPropsValue , {getPropIsRequired} from './extractPropTypes';
 
 class App extends Component {
@@ -13,6 +11,12 @@ class App extends Component {
         props: {},
         currentComponent: null
     };
+    constructor(){
+        super();
+        cssPaths.map(path => {
+            import(`../${path}`);
+        })
+    }
     defaultValueMappingsRequired = {
         string: 'test',
         boolean: false,
@@ -106,7 +110,7 @@ class App extends Component {
                     <div className="p-3">Component List</div>
                     <ul className="list-unstyled components">
                         {
-                            componentsPath.map(path => (
+                            componentPaths.map(path => (
                                 <li key={path} className="nav-item">
                                     <a href="#" name={path} onClick={this.renderSelectedComponent} className="nav-link">
                                         {this.getComponentName(path)}

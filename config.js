@@ -1,7 +1,7 @@
 var config = {
-    basePath: './src/components',
-    cssPath: './src/css',
-    outputPath: './src/filePaths.js'
+    basePaths: ['./src/components'],
+    cssPaths: ['./src/App.css'], 
+    outputPath: './src/filePaths.js' //(optional)
 };
 
 module.exports = config;
