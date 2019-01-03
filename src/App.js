@@ -155,6 +155,9 @@ class App extends Component {
                 </div>
                 <div id="rp-content" className="text-center container-fluid py-3">
                     {
+                        !componentElement && (<div className="h-100"><h1 className="d-flex align-items-center justify-content-center h-100">React Playground</h1></div>)
+                    }
+                    {
                         componentElement && <div className="container-fluid mb-4 text-center">
                             <div className="bd-example rounded">{componentElement}</div>
                         </div>
